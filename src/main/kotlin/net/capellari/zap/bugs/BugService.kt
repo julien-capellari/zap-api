@@ -38,4 +38,8 @@ class BugService(private val bugRepository: BugRepository) {
 
         return BugResponseDto(result)
     }
+
+    fun deleteBug(id: UUID) {
+        this.bugRepository.deleteById(id)
+    }
 }

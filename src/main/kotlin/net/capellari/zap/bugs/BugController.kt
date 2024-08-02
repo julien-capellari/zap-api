@@ -33,4 +33,10 @@ class BugController(private val bugService: BugService) {
         return this.bugService.updateBug(id, body)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Bug not found")
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteBug(@PathVariable("id") id: UUID) {
+        this.bugService.deleteBug(id)
+    }
 }
