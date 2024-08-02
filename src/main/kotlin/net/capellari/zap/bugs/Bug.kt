@@ -1,11 +1,18 @@
 package net.capellari.zap.bugs
 
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 import net.capellari.zap.bugs.dtos.BugRequestDto
-import java.util.*
+import java.util.Date
+import java.util.UUID
 
 @Entity
-data class Bug (
+data class Bug(
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     @Column val id: UUID?,
     @Column(length = 200) var title: String,

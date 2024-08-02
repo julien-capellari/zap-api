@@ -3,7 +3,8 @@ package net.capellari.zap.bugs.dtos
 import com.fasterxml.jackson.annotation.JsonProperty
 import net.capellari.zap.bugs.Bug
 import net.capellari.zap.bugs.BugStatus
-import java.util.*
+import java.util.Date
+import java.util.UUID
 
 data class BugResponseDto(
     @JsonProperty val id: UUID,

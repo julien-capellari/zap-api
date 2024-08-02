@@ -1,9 +1,11 @@
 package net.capellari.zap.bugs.dtos
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import jakarta.validation.constraints.*
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.Size
 import net.capellari.zap.bugs.BugStatus
-import java.util.*
+import java.util.Date
 
 data class BugRequestDto(
     @field:Size(max = 200)
