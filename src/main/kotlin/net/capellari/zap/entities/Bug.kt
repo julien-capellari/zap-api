@@ -7,18 +7,18 @@ import java.util.*
 data class Bug (
     @Id @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
-    var id: UUID?,
+    val id: UUID?,
     @Column(name = "title", nullable = false)
-    var title: String,
+    val title: String,
     @Column(name = "date", nullable = false)
-    var date: Date,
+    val date: Date,
     @Column(name = "severity", nullable = false)
-    var severity: Int,
+    val severity: Int,
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    var status: BugStatus,
+    val status: BugStatus,
     @Column(name = "description", nullable = false)
-    var description: String,
+    val description: String,
 ) {
     constructor() : this(null, "", Date(), 1, BugStatus.TODO, "")
 }

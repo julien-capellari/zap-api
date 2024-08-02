@@ -32,6 +32,7 @@ databaseChangeLog:
               - column:
                   name: status
                   type: bug_status
+                  defaultValue: TODO
                   constraints:
                     nullable: false
               - column:
