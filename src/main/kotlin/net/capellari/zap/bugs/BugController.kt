@@ -1,5 +1,8 @@
 package net.capellari.zap.bugs
 
+import jakarta.validation.Valid
+import net.capellari.zap.bugs.dtos.BugCreateDto
+import net.capellari.zap.bugs.dtos.BugResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
@@ -14,7 +17,7 @@ class BugController(private val bugService: BugService) {
     }
 
     @PostMapping
-    fun createBug(@RequestBody body: BugCreateDto): BugResponseDto {
+    fun createBug(@RequestBody @Valid body: BugCreateDto): BugResponseDto {
         return this.bugService.createBug(body)
     }
 

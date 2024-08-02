@@ -1,6 +1,7 @@
 package net.capellari.zap.bugs
 
 import jakarta.persistence.*
+import net.capellari.zap.bugs.dtos.BugCreateDto
 import java.util.*
 
 @Entity

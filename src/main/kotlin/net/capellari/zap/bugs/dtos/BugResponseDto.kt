@@ -1,6 +1,8 @@
-package net.capellari.zap.bugs
+package net.capellari.zap.bugs.dtos
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import net.capellari.zap.bugs.Bug
+import net.capellari.zap.bugs.BugStatus
 import java.util.*
 
 data class BugResponseDto(

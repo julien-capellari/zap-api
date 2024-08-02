@@ -1,5 +1,7 @@
 package net.capellari.zap.bugs
 
+import net.capellari.zap.bugs.dtos.BugCreateDto
+import net.capellari.zap.bugs.dtos.BugResponseDto
 import org.springframework.stereotype.Service
 import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
