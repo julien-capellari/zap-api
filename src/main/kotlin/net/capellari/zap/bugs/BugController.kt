@@ -1,7 +1,5 @@
-package net.capellari.zap.controllers
+package net.capellari.zap.bugs
 
-import net.capellari.zap.dtos.BugResponse
-import net.capellari.zap.services.BugService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
@@ -10,7 +8,7 @@ import java.util.UUID
 @RestController
 @RequestMapping("/bugs")
 class BugController(private val bugService: BugService) {
-    @GetMapping("/")
+    @GetMapping
     fun listBugs(): List<BugResponse> {
         return this.bugService.listBugs()
     }

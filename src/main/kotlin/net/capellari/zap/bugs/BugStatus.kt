@@ -1,4 +1,4 @@
-package net.capellari.zap.entities
+package net.capellari.zap.bugs
 
 enum class BugStatus {
     TODO,

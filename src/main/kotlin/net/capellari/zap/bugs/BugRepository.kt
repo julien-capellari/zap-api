@@ -1,6 +1,5 @@
-package net.capellari.zap.repositories
+package net.capellari.zap.bugs
 
-import net.capellari.zap.entities.Bug
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
