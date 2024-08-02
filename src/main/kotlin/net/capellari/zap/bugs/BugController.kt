@@ -1,9 +1,8 @@
 package net.capellari.zap.bugs
 
 import jakarta.validation.Valid
-import net.capellari.zap.bugs.dtos.BugCreateDto
+import net.capellari.zap.bugs.dtos.BugRequestDto
 import net.capellari.zap.bugs.dtos.BugResponseDto
-import net.capellari.zap.bugs.dtos.BugUpdateDto
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
@@ -18,7 +17,7 @@ class BugController(private val bugService: BugService) {
     }
 
     @PostMapping
-    fun createBug(@RequestBody @Valid body: BugCreateDto): BugResponseDto {
+    fun createBug(@RequestBody @Valid body: BugRequestDto): BugResponseDto {
         return this.bugService.createBug(body)
     }
 
@@ -29,7 +28,7 @@ class BugController(private val bugService: BugService) {
     }
 
     @PutMapping("/{id}")
-    fun updateBug(@PathVariable("id") id: UUID, @RequestBody @Valid body: BugUpdateDto): BugResponseDto {
+    fun updateBug(@PathVariable("id") id: UUID, @RequestBody @Valid body: BugRequestDto): BugResponseDto {
         return this.bugService.updateBug(id, body)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Bug not found")
     }
