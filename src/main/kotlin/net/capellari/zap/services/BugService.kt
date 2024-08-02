@@ -10,12 +10,12 @@ import kotlin.jvm.optionals.getOrNull
 class BugService(val bugRepository: BugRepository) {
     fun listBugs(): List<BugResponse> {
         return this.bugRepository.findAll()
-            .map { BugResponse(id = it.id!!) }
+            .map { BugResponse(it) }
     }
 
     fun getBug(id: UUID): BugResponse? {
         return this.bugRepository.findById(id)
-            .map { BugResponse(id = it.id!!) }
+            .map { BugResponse(it) }
             .getOrNull()
     }
 }

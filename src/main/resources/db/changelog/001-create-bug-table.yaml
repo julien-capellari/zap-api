@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 001
+      id: 001-create-bug-table
       author: julien capellari
       changes:
         - sql:
@@ -11,6 +11,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: uuid
+                  defaultValueComputed: uuid_generate_v4()
                   constraints:
                     primaryKey: true
                     nullable: false
