@@ -7,7 +7,7 @@ import java.util.*
 data class Bug (
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     @Column val id: UUID?,
-    @Column val title: String,
+    @Column(length = 200) val title: String,
     @Column val date: Date,
     @Column val severity: Int,
     @Enumerated(EnumType.STRING)
@@ -15,4 +15,5 @@ data class Bug (
     @Column val description: String,
 ) {
     constructor() : this(null, "", Date(), 1, BugStatus.TODO, "")
+    constructor(data: BugCreateDto) : this(null, data.title, data.date, data.severity, data.status, data.description)
 }

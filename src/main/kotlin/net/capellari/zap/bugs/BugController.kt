@@ -9,12 +9,17 @@ import java.util.UUID
 @RequestMapping("/bugs")
 class BugController(private val bugService: BugService) {
     @GetMapping
-    fun listBugs(): List<BugResponse> {
+    fun listBugs(): List<BugResponseDto> {
         return this.bugService.listBugs()
     }
 
+    @PostMapping
+    fun createBug(@RequestBody body: BugCreateDto): BugResponseDto {
+        return this.bugService.createBug(body)
+    }
+
     @GetMapping("/{id}")
-    fun getBug(@PathVariable("id") id: UUID): BugResponse {
+    fun getBug(@PathVariable("id") id: UUID): BugResponseDto {
         return this.bugService.getBug(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Bug not found")
     }

@@ -5,15 +5,21 @@ import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
 
 @Service
-class BugService(val bugRepository: BugRepository) {
-    fun listBugs(): List<BugResponse> {
+class BugService(private val bugRepository: BugRepository) {
+    fun listBugs(): List<BugResponseDto> {
         return this.bugRepository.findAll()
-            .map { BugResponse(it) }
+            .map { BugResponseDto(it) }
     }
 
-    fun getBug(id: UUID): BugResponse? {
+    fun createBug(data: BugCreateDto): BugResponseDto {
+        val bug = this.bugRepository.save(Bug(data))
+        return BugResponseDto(bug)
+    }
+
+    fun getBug(id: UUID): BugResponseDto
+    ? {
         return this.bugRepository.findById(id)
-            .map { BugResponse(it) }
+            .map { BugResponseDto(it) }
             .getOrNull()
     }
 }

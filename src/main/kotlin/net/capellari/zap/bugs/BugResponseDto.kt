@@ -3,7 +3,7 @@ package net.capellari.zap.bugs
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 
-data class BugResponse(
+data class BugResponseDto(
     @JsonProperty val id: UUID,
     @JsonProperty val title: String,
     @JsonProperty val date: Date,
