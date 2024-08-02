@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: julien capellari
+      changes:
+        - sql:
+            sql: CREATE TYPE bug_status AS ENUM('TODO', 'VALIDATED', 'DONE', 'ABORTED')
+        - createTable:
+            tableName: bug
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: severity
+                  type: tinyint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: bug_status
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  defaultValue: ''
+                  constraints:
+                    nullable: false
+        - sql:
+            sql: ALTER TABLE bug ADD CONSTRAINT bug_severity_check CHECK (severity BETWEEN 1 AND 5);
