@@ -52,14 +52,16 @@ class BugControllerTest(
     @Test
     fun `POST _bugs should create a new bug using body data`() {
         val id = UUID.randomUUID()
-        val bug = BugResponseDto(id, "Test", sdf.parse("2024-08-06T17:10:00.000Z"), 2, BugStatus.VALIDATED, "life is 42")
+        val bug =
+            BugResponseDto(id, "Test", sdf.parse("2024-08-06T17:10:00.000Z"), 2, BugStatus.VALIDATED, "life is 42")
 
         every { bugService.createBug(any()) } returns bug
 
         mockMvc
-            .perform(post("/bugs")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 2, \"status\": \"VALIDATED\", \"description\": \"life is 42\" }")
+            .perform(
+                post("/bugs")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 2, \"status\": \"VALIDATED\", \"description\": \"life is 42\" }")
             )
             .andExpect(status().isCreated)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -80,9 +82,10 @@ class BugControllerTest(
         every { bugService.createBug(any()) } returns bug
 
         mockMvc
-            .perform(post("/bugs")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 1 }")
+            .perform(
+                post("/bugs")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 1 }")
             )
             .andExpect(status().isCreated)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -103,9 +106,10 @@ class BugControllerTest(
         every { bugService.createBug(any()) } returns bug
 
         mockMvc
-            .perform(post("/bugs")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}")
+            .perform(
+                post("/bugs")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{}")
             )
             .andExpect(status().isBadRequest)
 
@@ -121,7 +125,7 @@ class BugControllerTest(
 
         every { bugService.getBug(any()) } returns bug
 
-        mockMvc.perform(get("/bugs/${id}"))
+        mockMvc.perform(get("/bugs/$id"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(id.toString()))
@@ -140,7 +144,7 @@ class BugControllerTest(
 
         every { bugService.getBug(any()) } returns null
 
-        mockMvc.perform(get("/bugs/${id}"))
+        mockMvc.perform(get("/bugs/$id"))
             .andExpect(status().isNotFound)
 
         verify(exactly = 1) { bugService.getBug(id) }
@@ -149,21 +153,24 @@ class BugControllerTest(
     @Test
     fun `PUT _bugs_{id} should update bug using body data`() {
         val id = UUID.randomUUID()
-        val bug = BugResponseDto(id, "Test", sdf.parse("2024-08-06T17:10:00.000Z"), 2, BugStatus.VALIDATED, "life is 42")
+        val bug =
+            BugResponseDto(id, "Test", sdf.parse("2024-08-06T17:10:00.000Z"), 2, BugStatus.VALIDATED, "life is 42")
 
         every { bugService.updateBug(any(), any()) } returns bug
 
         mockMvc
-            .perform(put("/bugs/${id}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 2, \"status\": \"VALIDATED\", \"description\": \"life is 42\" }")
+            .perform(
+                put("/bugs/$id")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 2, \"status\": \"VALIDATED\", \"description\": \"life is 42\" }")
             )
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(id.toString()))
 
         verify(exactly = 1) {
-            bugService.updateBug(id,
+            bugService.updateBug(
+                id,
                 BugRequestDto("Test", sdf.parse("2024-08-06T17:10:00.000Z"), 2, BugStatus.VALIDATED, "life is 42")
             )
         }
@@ -177,16 +184,18 @@ class BugControllerTest(
         every { bugService.updateBug(any(), any()) } returns bug
 
         mockMvc
-            .perform(put("/bugs/${id}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 1 }")
+            .perform(
+                put("/bugs/$id")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 1 }")
             )
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(id.toString()))
 
         verify(exactly = 1) {
-            bugService.updateBug(id,
+            bugService.updateBug(
+                id,
                 BugRequestDto("Test", sdf.parse("2024-08-06T17:10:00.000Z"), 1)
             )
         }
@@ -199,9 +208,10 @@ class BugControllerTest(
         every { bugService.updateBug(any(), any()) } returns null
 
         mockMvc
-            .perform(put("/bugs/${id}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 2, \"status\": \"VALIDATED\", \"description\": \"life is 42\" }")
+            .perform(
+                put("/bugs/$id")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{ \"title\": \"Test\", \"date\": \"2024-08-06T17:10:00.000Z\", \"severity\": 2, \"status\": \"VALIDATED\", \"description\": \"life is 42\" }")
             )
             .andExpect(status().isNotFound)
 
@@ -215,9 +225,10 @@ class BugControllerTest(
         every { bugService.updateBug(any(), any()) } returns null
 
         mockMvc
-            .perform(put("/bugs/${id}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}")
+            .perform(
+                put("/bugs/$id")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{}")
             )
             .andExpect(status().isBadRequest)
 
@@ -232,7 +243,7 @@ class BugControllerTest(
 
         every { bugService.deleteBug(any()) } just Runs
 
-        mockMvc.perform(delete("/bugs/${id}"))
+        mockMvc.perform(delete("/bugs/$id"))
             .andExpect(status().isNoContent)
 
         verify(exactly = 1) { bugService.deleteBug(id) }
