@@ -22,27 +22,34 @@ class BugController(
     private val bugService: BugService,
 ) {
     @GetMapping
-    fun listBugs(): List<BugResponseDto> = this.bugService.listBugs()
+    fun listBugs(): List<BugResponseDto> {
+        return this.bugService.listBugs()
+    }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     fun createBug(
         @RequestBody @Valid body: BugRequestDto,
-    ): BugResponseDto = this.bugService.createBug(body)
+    ): BugResponseDto {
+        return this.bugService.createBug(body)
+    }
 
     @GetMapping("/{id}")
     fun getBug(
         @PathVariable("id") id: UUID,
-    ): BugResponseDto =
-        this.bugService.getBug(id)
+    ): BugResponseDto {
+        return this.bugService.getBug(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Bug not found")
+    }
 
     @PutMapping("/{id}")
     fun updateBug(
         @PathVariable("id") id: UUID,
         @RequestBody @Valid body: BugRequestDto,
-    ): BugResponseDto =
-        this.bugService.updateBug(id, body)
+    ): BugResponseDto {
+        return this.bugService.updateBug(id, body)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Bug not found")
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
