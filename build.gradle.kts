@@ -29,7 +29,12 @@ dependencies {
     implementation("jakarta.validation:jakarta.validation-api")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude("org.junit.vintage", "junit-vintage-engine")
+        exclude("org.mockito", "mockito-core")
+    }
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
