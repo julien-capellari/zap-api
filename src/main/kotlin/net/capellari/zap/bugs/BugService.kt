@@ -11,22 +11,21 @@ class BugService(
     private val bugRepository: BugRepository,
 ) {
     fun listBugs(): List<BugResponseDto> {
-        return this.bugRepository.findAll()
+        return bugRepository.findAll()
             .map { BugResponseDto(it) }
     }
 
     fun getBug(id: UUID): BugResponseDto? {
-        return this.bugRepository.findByIdOrNull(id)
+        return bugRepository.findByIdOrNull(id)
             ?.let { BugResponseDto(it) }
     }
 
     fun createBug(data: BugRequestDto): BugResponseDto {
-        return this.bugRepository.save(Bug(data))
-            .let { BugResponseDto(it) }
+        return BugResponseDto(bugRepository.save(Bug(data)))
     }
 
     fun updateBug(id: UUID, update: BugRequestDto): BugResponseDto? {
-        return this.bugRepository.findByIdOrNull(id)
+        return bugRepository.findByIdOrNull(id)
             ?.apply {
                 title = update.title
                 date = update.date
@@ -35,11 +34,11 @@ class BugService(
                 description = update.description
             }
             ?.let {
-                BugResponseDto(this.bugRepository.save(it))
+                BugResponseDto(bugRepository.save(it))
             }
     }
 
     fun deleteBug(id: UUID) {
-        this.bugRepository.deleteById(id)
+        bugRepository.deleteById(id)
     }
 }

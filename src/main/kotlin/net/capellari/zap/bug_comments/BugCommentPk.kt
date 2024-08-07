@@ -3,8 +3,8 @@ package net.capellari.zap.bug_comments
 import java.util.UUID
 
 data class BugCommentPk(
-    val id: UUID?,
     val bugId: UUID,
+    val id: UUID?,
 ) {
-    constructor() : this(null, UUID.randomUUID())
+    constructor() : this(UUID.randomUUID(), null)
 }

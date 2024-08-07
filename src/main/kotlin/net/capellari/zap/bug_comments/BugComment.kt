@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import net.capellari.zap.bug_comments.dtos.BugCommentRequestDto
 import java.util.Date
 import java.util.UUID
 
@@ -20,4 +21,5 @@ data class BugComment(
     @Column var content: String,
 ) {
     constructor() : this(null, UUID.randomUUID(), Date(), "", "")
+    constructor(bugId: UUID, data: BugCommentRequestDto) : this(null, bugId, data.date, data.username, data.content)
 }
