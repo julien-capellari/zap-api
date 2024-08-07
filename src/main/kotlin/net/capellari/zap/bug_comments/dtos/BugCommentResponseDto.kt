@@ -6,12 +6,12 @@ import java.util.Date
 import java.util.UUID
 
 data class BugCommentResponseDto(
-    @JsonProperty val id: UUID,
     @JsonProperty val bugId: UUID,
+    @JsonProperty val id: UUID,
     @JsonProperty val date: Date,
     @JsonProperty val username: String,
     @JsonProperty val content: String,
 ) {
-    constructor(bugComment: BugComment)
-            : this(bugComment.id!!, bugComment.bugId, bugComment.date, bugComment.username, bugComment.content)
+    constructor(bugComment: BugComment) :
+        this(bugComment.bugId, bugComment.id!!, bugComment.date, bugComment.username, bugComment.content)
 }

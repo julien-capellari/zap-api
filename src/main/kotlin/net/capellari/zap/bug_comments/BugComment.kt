@@ -13,13 +13,13 @@ import java.util.UUID
 @Entity
 @IdClass(BugCommentPk::class)
 data class BugComment(
+    @Id @Column val bugId: UUID,
     @GeneratedValue(strategy = GenerationType.UUID)
     @Id @Column val id: UUID?,
-    @Id @Column val bugId: UUID,
     @Column var date: Date,
     @Column var username: String,
     @Column var content: String,
 ) {
-    constructor() : this(null, UUID.randomUUID(), Date(), "", "")
-    constructor(bugId: UUID, data: BugCommentRequestDto) : this(null, bugId, data.date, data.username, data.content)
+    constructor() : this(UUID.randomUUID(), null, Date(), "", "")
+    constructor(bugId: UUID, data: BugCommentRequestDto) : this(bugId, null, data.date, data.username, data.content)
 }
