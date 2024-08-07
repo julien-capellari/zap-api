@@ -1,7 +1,7 @@
-package net.capellari.zap.bug_comments
+package net.capellari.zap.bugcomments
 
-import net.capellari.zap.bug_comments.dtos.BugCommentRequestDto
-import net.capellari.zap.bug_comments.dtos.BugCommentResponseDto
+import net.capellari.zap.bugcomments.dtos.BugCommentRequestDto
+import net.capellari.zap.bugcomments.dtos.BugCommentResponseDto
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.util.UUID

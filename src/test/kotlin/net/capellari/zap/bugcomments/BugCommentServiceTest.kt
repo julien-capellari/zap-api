@@ -1,4 +1,4 @@
-package net.capellari.zap.bug_comments
+package net.capellari.zap.bugcomments
 
 import io.mockk.Called
 import io.mockk.Runs
@@ -6,8 +6,8 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
-import net.capellari.zap.bug_comments.dtos.BugCommentRequestDto
-import net.capellari.zap.bug_comments.dtos.BugCommentResponseDto
+import net.capellari.zap.bugcomments.dtos.BugCommentRequestDto
+import net.capellari.zap.bugcomments.dtos.BugCommentResponseDto
 import org.junit.jupiter.api.Test
 import org.springframework.data.repository.findByIdOrNull
 import java.util.Date

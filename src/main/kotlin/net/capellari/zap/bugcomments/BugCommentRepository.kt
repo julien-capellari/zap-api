@@ -1,4 +1,4 @@
-package net.capellari.zap.bug_comments
+package net.capellari.zap.bugcomments
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query

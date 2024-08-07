@@ -1,4 +1,4 @@
-package net.capellari.zap.bug_comments.dtos
+package net.capellari.zap.bugcomments.dtos
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.Size

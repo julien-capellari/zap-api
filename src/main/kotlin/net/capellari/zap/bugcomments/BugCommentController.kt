@@ -1,8 +1,8 @@
-package net.capellari.zap.bug_comments
+package net.capellari.zap.bugcomments
 
 import jakarta.validation.Valid
-import net.capellari.zap.bug_comments.dtos.BugCommentRequestDto
-import net.capellari.zap.bug_comments.dtos.BugCommentResponseDto
+import net.capellari.zap.bugcomments.dtos.BugCommentRequestDto
+import net.capellari.zap.bugcomments.dtos.BugCommentResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

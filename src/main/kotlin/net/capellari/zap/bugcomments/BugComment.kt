@@ -1,4 +1,4 @@
-package net.capellari.zap.bug_comments
+package net.capellari.zap.bugcomments
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
-import net.capellari.zap.bug_comments.dtos.BugCommentRequestDto
+import net.capellari.zap.bugcomments.dtos.BugCommentRequestDto
 import java.util.Date
 import java.util.UUID
 
