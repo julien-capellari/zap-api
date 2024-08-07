@@ -10,14 +10,14 @@ import java.util.Date
 import java.util.UUID
 
 @Entity
-@IdClass(BugComment::class)
+@IdClass(BugCommentPk::class)
 data class BugComment(
     @GeneratedValue(strategy = GenerationType.UUID)
     @Id @Column val id: UUID?,
     @Id @Column val bugId: UUID,
-    @Column val date: Date,
-    @Column val username: String,
-    @Column val content: String,
+    @Column var date: Date,
+    @Column var username: String,
+    @Column var content: String,
 ) {
     constructor() : this(null, UUID.randomUUID(), Date(), "", "")
 }
