@@ -13,8 +13,8 @@ import java.util.UUID
 
 @Entity
 data class Bug(
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
-    @Column val id: UUID?,
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Id @Column val id: UUID?,
     @Column(length = 200) var title: String,
     @Column var date: Date,
     @Column var severity: Int,

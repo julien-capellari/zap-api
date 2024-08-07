@@ -23,7 +23,7 @@ class BugController(
 ) {
     @GetMapping
     fun listBugs(): List<BugResponseDto> {
-        return this.bugService.listBugs()
+        return bugService.listBugs()
     }
 
     @PostMapping
@@ -31,14 +31,14 @@ class BugController(
     fun createBug(
         @RequestBody @Valid body: BugRequestDto,
     ): BugResponseDto {
-        return this.bugService.createBug(body)
+        return bugService.createBug(body)
     }
 
     @GetMapping("/{id}")
     fun getBug(
         @PathVariable("id") id: UUID,
     ): BugResponseDto {
-        return this.bugService.getBug(id)
+        return bugService.getBug(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Bug not found")
     }
 
@@ -47,7 +47,7 @@ class BugController(
         @PathVariable("id") id: UUID,
         @RequestBody @Valid body: BugRequestDto,
     ): BugResponseDto {
-        return this.bugService.updateBug(id, body)
+        return bugService.updateBug(id, body)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Bug not found")
     }
 
@@ -56,6 +56,6 @@ class BugController(
     fun deleteBug(
         @PathVariable("id") id: UUID,
     ) {
-        this.bugService.deleteBug(id)
+        bugService.deleteBug(id)
     }
 }

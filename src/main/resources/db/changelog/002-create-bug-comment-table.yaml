@@ -1,12 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 001-create-bug-table
+      id: 002-create-bug-comment-table
       author: julien capellari
       changes:
-        - sql:
-            sql: CREATE TYPE bug_status AS ENUM('TODO', 'VALIDATED', 'DONE', 'ABORTED')
         - createTable:
-            tableName: bug
+            tableName: bug_comment
             columns:
               - column:
                   name: id
@@ -15,32 +13,37 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
+
               - column:
-                  name: title
-                  type: varchar(200)
+                  name: bug_id
+                  type: uuid
                   constraints:
                     nullable: false
+                    primaryKey: true
+
               - column:
                   name: date
                   type: datetime
                   constraints:
                     nullable: false
+
               - column:
-                  name: severity
-                  type: tinyint
+                  name: username
+                  type: varchar(200)
                   constraints:
                     nullable: false
+
               - column:
-                  name: status
-                  type: bug_status
-                  defaultValue: TODO
-                  constraints:
-                    nullable: false
-              - column:
-                  name: description
+                  name: content
                   type: text
-                  defaultValue: ''
                   constraints:
                     nullable: false
-        - sql:
-            sql: ALTER TABLE bug ADD CONSTRAINT chk_bug_severity CHECK (severity BETWEEN 1 AND 5);
+
+        - addForeignKeyConstraint:
+            constraintName: fk_bug_comment_bug_id
+            baseTableName: bug_comment
+            baseColumnNames: bug_id
+            referencedTableName: bug
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: RESTRICT
