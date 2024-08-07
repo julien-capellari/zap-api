@@ -1,4 +1,4 @@
-package net.capellari.zap.comments
+package net.capellari.zap.bug_comments
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

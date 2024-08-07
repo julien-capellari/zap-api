@@ -1,10 +1,12 @@
-package net.capellari.zap.comments
+package net.capellari.zap.bug_comments
 
-import net.capellari.zap.comments.dtos.BugCommentResponseDto
+import net.capellari.zap.bug_comments.dtos.BugCommentResponseDto
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.server.ResponseStatusException
 import java.util.UUID
 
 @RestController
@@ -17,5 +19,14 @@ class BugCommentController(
         @PathVariable("bugId") bugId: UUID
     ): List<BugCommentResponseDto> {
         return bugCommentService.listBugComments(bugId)
+    }
+
+    @GetMapping("/{id}")
+    fun getBugComment(
+        @PathVariable("bugId") bugId: UUID,
+        @PathVariable("id") id: UUID
+    ): BugCommentResponseDto {
+        return this.bugCommentService.getBug(bugId, id)
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Bug comment not found")
     }
 }

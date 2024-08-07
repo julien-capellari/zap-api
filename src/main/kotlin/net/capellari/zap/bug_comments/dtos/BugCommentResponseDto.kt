@@ -1,7 +1,7 @@
-package net.capellari.zap.comments.dtos
+package net.capellari.zap.bug_comments.dtos
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import net.capellari.zap.comments.BugComment
+import net.capellari.zap.bug_comments.BugComment
 import java.util.Date
 import java.util.UUID
 
