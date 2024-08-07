@@ -24,7 +24,7 @@ import java.util.Date
 import java.util.UUID
 import kotlin.test.Test
 
-@WebMvcTest(BugController::class)
+@WebMvcTest(controllers = [BugController::class])
 class BugControllerTest(
     @Autowired val mockMvc: MockMvc
 ) {
@@ -233,7 +233,7 @@ class BugControllerTest(
             .andExpect(status().isBadRequest)
 
         verify(exactly = 1) {
-            bugService.updateBug(id, any())?.wasNot(Called)
+            bugService.updateBug(id, any())!! wasNot(Called)
         }
     }
 
