@@ -7,14 +7,15 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.IdClass
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import java.util.Date
 import java.util.UUID
 
 @Entity
 data class Bug(
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
-    @Column val id: UUID?,
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Id @Column val id: UUID?,
     @Column(length = 200) var title: String,
     @Column var date: Date,
     @Column var severity: Int,
