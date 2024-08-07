@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "baseBranches": ["main"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    }
+  ],
+  "github-actions": {
+    "addLabels": ["github-actions"]
+  }
+}
