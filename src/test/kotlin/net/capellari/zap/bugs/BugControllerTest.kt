@@ -24,7 +24,7 @@ import java.util.Date
 import java.util.UUID
 import kotlin.test.Test
 
-@WebMvcTest
+@WebMvcTest(BugController::class)
 class BugControllerTest(
     @Autowired val mockMvc: MockMvc
 ) {
