@@ -18,10 +18,8 @@ databaseChangeLog:
                   name: bug_id
                   type: uuid
                   constraints:
-                    primaryKey: true
-                    foreignKeyName: fk_bug_comment_bug_id
-                    references: bug(id)
                     nullable: false
+                    primaryKey: true
 
               - column:
                   name: date
@@ -40,3 +38,12 @@ databaseChangeLog:
                   type: text
                   constraints:
                     nullable: false
+
+        - addForeignKeyConstraint:
+            constraintName: fk_bug_comment_bug_id
+            baseTableName: bug_comment
+            baseColumnNames: bug_id
+            referencedTableName: bug
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: RESTRICT
