@@ -157,7 +157,7 @@ class BugCommentControllerTest(
             bugCommentService.updateBugComment(
                 bugId,
                 id,
-                BugCommentRequestDto(sdf.parse("2024-08-06T17:10:00.000Z"), "toto", "life is 42")
+                BugCommentRequestDto(sdf.parse("2024-08-06T17:10:00.000Z"), "toto", "updated")
             )
         }
     }
