@@ -1,5 +1,6 @@
 package net.capellari.zap.bugs
 
+import io.mockk.Called
 import io.mockk.Runs
 import io.mockk.called
 import io.mockk.every
@@ -9,10 +10,13 @@ import io.mockk.verify
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import net.capellari.zap.bugs.dtos.BugResponseDto
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.web.server.ResponseStatusException
 import java.util.Date
 import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
 class BugServiceTest {
@@ -86,19 +90,38 @@ class BugServiceTest {
     fun `updateBug should create bug and return it mapped to response dto`() {
         val id = UUID.randomUUID()
         val date = Date()
-        val payload = BugRequestDto("Test updated", date, 2, BugStatus.VALIDATED, "updated")
+        val payload = BugRequestDto("Test updated", date, 2, BugStatus.TODO, "updated")
 
-        every { bugRepository.findByIdOrNull(id) } returns Bug(id, "Test", date, 1, BugStatus.TODO, "")
+        every { bugRepository.findByIdOrNull(id) } returns Bug(id, "Test", date, 1, BugStatus.VALIDATED, "")
         every { bugRepository.save(any()) } returnsArgument 0
 
         assertEquals(
-            BugResponseDto(id, "Test updated", date, 2, BugStatus.VALIDATED, "updated"),
+            BugResponseDto(id, "Test updated", date, 2, BugStatus.TODO, "updated"),
             bugService.updateBug(id, payload)
         )
 
         verify(exactly = 1) {
             bugRepository.findById(id)
-            bugRepository.save(Bug(id, "Test updated", date, 2, BugStatus.VALIDATED, "updated"))
+            bugRepository.save(Bug(id, "Test updated", date, 2, BugStatus.TODO, "updated"))
+        }
+    }
+
+    @Test
+    fun `updateBug should forbid update from TODO to VALIDATED`() {
+        val id = UUID.randomUUID()
+        val date = Date()
+        val payload = BugRequestDto("Test updated", date, 2, BugStatus.VALIDATED, "updated")
+
+        every { bugRepository.findByIdOrNull(id) } returns Bug(id, "Test", date, 1, BugStatus.TODO, "")
+        every { bugRepository.save(any()) } returnsArgument 0
+
+        assertFailsWith(ResponseStatusException::class) {
+            bugService.updateBug(id, payload)
+        }
+
+        verify(exactly = 1) {
+            bugRepository.findById(id)
+            bugRepository.save(any()) wasNot Called
         }
     }
 

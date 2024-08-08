@@ -3,7 +3,9 @@ package net.capellari.zap.bugs
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import net.capellari.zap.bugs.dtos.BugResponseDto
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 import java.util.UUID
 
 @Service
@@ -27,6 +29,10 @@ class BugService(
     fun updateBug(id: UUID, update: BugRequestDto): BugResponseDto? {
         return bugRepository.findByIdOrNull(id)
             ?.apply {
+                if (status === BugStatus.TODO && update.status === BugStatus.VALIDATED) {
+                    throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot move a TODO bug to VALIDATED")
+                }
+
                 title = update.title
                 date = update.date
                 severity = update.severity
