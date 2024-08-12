@@ -1,7 +1,5 @@
 package net.capellari.zap.bugs
 
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
