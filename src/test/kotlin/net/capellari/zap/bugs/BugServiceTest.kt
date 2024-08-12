@@ -7,15 +7,18 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import net.capellari.zap.Order
+import net.capellari.zap.bugs.dtos.BugFiltersDto
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import net.capellari.zap.bugs.dtos.BugResponseDto
+import org.springframework.data.domain.Example
+import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.web.server.ResponseStatusException
 import java.util.Date
 import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
@@ -31,17 +34,17 @@ class BugServiceTest {
         val bugA = Bug(idA, "Test", Date(), 1, BugStatus.TODO, "")
         val bugB = Bug(idB, "Test", Date(), 1, BugStatus.TODO, "")
 
-        every { bugRepository.findAll() } returns listOf(bugA, bugB)
+        every { bugRepository.findAll(any<Example<Bug>>(), any<Sort>()) } returns listOf(bugA, bugB)
 
         assertEquals(
             listOf(
                 BugResponseDto(idA, bugA.title, bugA.date, bugA.severity, bugA.status, bugA.description),
                 BugResponseDto(idB, bugB.title, bugB.date, bugB.severity, bugB.status, bugB.description),
             ),
-            bugService.listBugs()
+            bugService.listBugs(BugFiltersDto(null, null), Order.DESC)
         )
 
-        verify(exactly = 1) { bugRepository.findAll() }
+        verify(exactly = 1) { bugRepository.findAll(any<Example<Bug>>(), any<Sort>()) }
     }
 
     @Test

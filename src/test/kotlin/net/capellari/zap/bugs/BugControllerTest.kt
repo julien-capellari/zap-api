@@ -6,6 +6,7 @@ import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.verify
+import net.capellari.zap.Order
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import net.capellari.zap.bugs.dtos.BugResponseDto
 import org.springframework.beans.factory.annotation.Autowired
@@ -38,7 +39,7 @@ class BugControllerTest(
         val bugA = BugResponseDto(UUID.randomUUID(), "Test", Date(), 1, BugStatus.TODO, "")
         val bugB = BugResponseDto(UUID.randomUUID(), "Test", Date(), 1, BugStatus.TODO, "")
 
-        every { bugService.listBugs() } returns listOf(bugA, bugB)
+        every { bugService.listBugs(any(), any()) } returns listOf(bugA, bugB)
 
         mockMvc.perform(get("/bugs"))
             .andExpect(status().isOk)
@@ -46,7 +47,7 @@ class BugControllerTest(
             .andExpect(jsonPath("$[0].id").value(bugA.id.toString()))
             .andExpect(jsonPath("$[1].id").value(bugB.id.toString()))
 
-        verify(exactly = 1) { bugService.listBugs() }
+        verify(exactly = 1) { bugService.listBugs(any(), Order.DESC) }
     }
 
     @Test
