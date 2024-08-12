@@ -1,6 +1,9 @@
 package net.capellari.zap.bugs
 
 import jakarta.validation.Valid
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
+import net.capellari.zap.bugs.dtos.BugFiltersDto
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import net.capellari.zap.bugs.dtos.BugResponseDto
 import org.springframework.http.HttpStatus
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
@@ -22,8 +26,11 @@ class BugController(
     private val bugService: BugService,
 ) {
     @GetMapping
-    fun listBugs(): List<BugResponseDto> {
-        return bugService.listBugs()
+    fun listBugs(
+        @RequestParam("status") status: BugStatus?,
+        @RequestParam("severity") @Max(5) @Min(1) severity: Int?,
+    ): List<BugResponseDto> {
+        return bugService.listBugs(BugFiltersDto(status, severity))
     }
 
     @PostMapping

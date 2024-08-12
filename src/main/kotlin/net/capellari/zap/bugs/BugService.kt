@@ -1,7 +1,10 @@
 package net.capellari.zap.bugs
 
+import net.capellari.zap.bugs.dtos.BugFiltersDto
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import net.capellari.zap.bugs.dtos.BugResponseDto
+import org.springframework.data.domain.Example
+import org.springframework.data.domain.ExampleMatcher
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -12,8 +15,16 @@ import java.util.UUID
 class BugService(
     private val bugRepository: BugRepository,
 ) {
-    fun listBugs(): List<BugResponseDto> {
-        return bugRepository.findAll()
+    fun listBugs(filters: BugFiltersDto): List<BugResponseDto> {
+        val example = Example.of(
+            Bug(filters),
+            ExampleMatcher.matchingAll()
+                .withIgnorePaths("id", "title", "date", "description")
+                .let { if (filters.status == null) it.withIgnorePaths("status") else it }
+                .let { if (filters.severity == null) it.withIgnorePaths("severity") else it }
+        )
+
+        return bugRepository.findAll(example)
             .map { BugResponseDto(it) }
     }
 

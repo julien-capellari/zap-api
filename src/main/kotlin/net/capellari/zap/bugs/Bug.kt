@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import net.capellari.zap.bugs.dtos.BugFiltersDto
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import java.util.Date
 import java.util.UUID
@@ -24,4 +25,5 @@ data class Bug(
 ) {
     constructor() : this(null, "", Date(), 1, BugStatus.TODO, "")
     constructor(data: BugRequestDto) : this(null, data.title, data.date, data.severity, data.status, data.description)
+    constructor(filters: BugFiltersDto) : this(null, "", Date(), filters.severity ?: 1, filters.status ?: BugStatus.TODO, "")
 }
