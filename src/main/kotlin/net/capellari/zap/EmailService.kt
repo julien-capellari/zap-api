@@ -9,11 +9,13 @@ class EmailService(
     private val emailSender: JavaMailSender,
 ) {
     fun sendEmail(to: String, subject: String, text: String) {
-        emailSender.send(SimpleMailMessage().apply {
-            setTo(to)
-            setFrom("noreply@zap.net")
-            setSubject(subject)
-            setText(text)
-        })
+        emailSender.send(
+            SimpleMailMessage().apply {
+                setTo(to)
+                setFrom("noreply@zap.net")
+                setSubject(subject)
+                setText(text)
+            }
+        )
     }
 }

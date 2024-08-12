@@ -65,7 +65,7 @@ class BugService(
                     emailService.sendEmail(
                         "admin@zap.net",
                         "Bug status changed",
-                        "Bug ${it.title} changed to ${it.status} status"
+                        "Bug ${it.title} changed from $originalStatus to ${it.status} status"
                     )
                 }
             }
