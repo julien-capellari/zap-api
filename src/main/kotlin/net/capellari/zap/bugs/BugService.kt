@@ -42,7 +42,10 @@ class BugService(
     }
 
     fun updateBug(id: UUID, update: BugRequestDto): BugResponseDto? {
-        return (bugRepository.findByIdOrNull(id) ?: return null)
+        val bug = (bugRepository.findByIdOrNull(id) ?: return null)
+        val originalStatus = bug.status
+
+        return bug
             .apply {
                 if (status === BugStatus.TODO && update.status === BugStatus.VALIDATED) {
                     throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot move a TODO bug to VALIDATED")
@@ -58,7 +61,13 @@ class BugService(
                 BugResponseDto(bugRepository.save(it))
             }
             .also {
-                emailService.sendEmail("admin@zap.net", "Bug status changed", "Bug ${it.title} changed to ${it.status} status")
+                if (originalStatus != it.status) {
+                    emailService.sendEmail(
+                        "admin@zap.net",
+                        "Bug status changed",
+                        "Bug ${it.title} changed to ${it.status} status"
+                    )
+                }
             }
     }
 
