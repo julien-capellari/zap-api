@@ -1,8 +1,11 @@
 package net.capellari.zap.bugs
 
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
+import net.capellari.zap.Order
 import net.capellari.zap.bugs.dtos.BugFiltersDto
 import net.capellari.zap.bugs.dtos.BugRequestDto
 import net.capellari.zap.bugs.dtos.BugResponseDto
@@ -29,8 +32,9 @@ class BugController(
     fun listBugs(
         @RequestParam("status") status: BugStatus?,
         @RequestParam("severity") @Max(5) @Min(1) severity: Int?,
+        @RequestParam("order") order: Order = Order.DESC,
     ): List<BugResponseDto> {
-        return bugService.listBugs(BugFiltersDto(status, severity))
+        return bugService.listBugs(BugFiltersDto(status, severity), order)
     }
 
     @PostMapping
