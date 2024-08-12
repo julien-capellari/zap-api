@@ -1,5 +1,6 @@
 package net.capellari.zap.bugs
 
+import net.capellari.zap.EmailService
 import net.capellari.zap.Order
 import net.capellari.zap.bugs.dtos.BugFiltersDto
 import net.capellari.zap.bugs.dtos.BugRequestDto
@@ -16,6 +17,7 @@ import java.util.UUID
 @Service
 class BugService(
     private val bugRepository: BugRepository,
+    private val emailService: EmailService
 ) {
     fun listBugs(filters: BugFiltersDto, order: Order): List<BugResponseDto> {
         val example = Example.of(
@@ -40,8 +42,11 @@ class BugService(
     }
 
     fun updateBug(id: UUID, update: BugRequestDto): BugResponseDto? {
-        return bugRepository.findByIdOrNull(id)
-            ?.apply {
+        val bug = (bugRepository.findByIdOrNull(id) ?: return null)
+        val originalStatus = bug.status
+
+        return bug
+            .apply {
                 if (status === BugStatus.TODO && update.status === BugStatus.VALIDATED) {
                     throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot move a TODO bug to VALIDATED")
                 }
@@ -52,8 +57,17 @@ class BugService(
                 status = update.status
                 description = update.description
             }
-            ?.let {
+            .let {
                 BugResponseDto(bugRepository.save(it))
+            }
+            .also {
+                if (originalStatus != it.status) {
+                    emailService.sendEmail(
+                        "admin@zap.net",
+                        "Bug status changed",
+                        "Bug ${it.title} changed from $originalStatus to ${it.status} status"
+                    )
+                }
             }
     }
 

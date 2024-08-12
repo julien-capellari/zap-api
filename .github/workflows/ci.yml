@@ -44,7 +44,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: List test result reports
-        if: ${{ !startsWith(github.head_ref, 'dependabot/') && !startsWith(github.head_ref, 'renovate/') }}
+        if: ${{ !cancelled() && !startsWith(github.head_ref, 'dependabot/') && !startsWith(github.head_ref, 'renovate/') }}
         id: reports
         uses: actions/github-script@v7
         with:
@@ -56,7 +56,7 @@ jobs:
             return files.join(",");
 
       - name: Upload test results to Codecov
-        if: ${{ !startsWith(github.head_ref, 'dependabot/') && !startsWith(github.head_ref, 'renovate/') }}
+        if: ${{ !cancelled() && !startsWith(github.head_ref, 'dependabot/') && !startsWith(github.head_ref, 'renovate/') }}
         uses: codecov/test-results-action@v1
         with:
           fail_ci_if_error: true

@@ -7,6 +7,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import net.capellari.zap.EmailService
 import net.capellari.zap.Order
 import net.capellari.zap.bugs.dtos.BugFiltersDto
 import net.capellari.zap.bugs.dtos.BugRequestDto
@@ -24,7 +25,9 @@ import kotlin.test.assertNull
 
 class BugServiceTest {
     private val bugRepository: BugRepository = mockk()
-    private val bugService = BugService(bugRepository)
+    private val emailService: EmailService = mockk()
+
+    private val bugService = BugService(bugRepository, emailService)
 
     @Test
     fun `listBug should return all bugs mapped to response dto`() {
@@ -97,6 +100,7 @@ class BugServiceTest {
 
         every { bugRepository.findByIdOrNull(id) } returns Bug(id, "Test", date, 1, BugStatus.VALIDATED, "")
         every { bugRepository.save(any()) } returnsArgument 0
+        every { emailService.sendEmail(any(), any(), any()) } just Runs
 
         assertEquals(
             BugResponseDto(id, "Test updated", date, 2, BugStatus.TODO, "updated"),
@@ -106,6 +110,7 @@ class BugServiceTest {
         verify(exactly = 1) {
             bugRepository.findById(id)
             bugRepository.save(Bug(id, "Test updated", date, 2, BugStatus.TODO, "updated"))
+            emailService.sendEmail("admin@zap.net", "Bug status changed", "Bug Test updated changed from VALIDATED to TODO status")
         }
     }
 
