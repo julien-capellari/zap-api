@@ -4,7 +4,7 @@ plugins {
     id("org.springframework.boot") version "3.3.2"
     id("org.jetbrains.kotlinx.kover") version "0.8.3"
     kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
+    kotlin("plugin.spring") version "2.0.21"
 }
 
 group = "net.capellari"
